@@ -15,20 +15,20 @@ public class ProductController {
     @Autowired
     private ProductService service;
 
-    @GetMapping("/create")
+    @GetMapping("/product/create")
     public String createProductForm(Model model){
         Product product = new Product();
         model.addAttribute("product", product);
         return "createProduct";
     }
 
-    @PostMapping("/create")
+    @PostMapping("/product/create")
     public String createProduct(@ModelAttribute Product product, Model model){
         service.create(product);
         return "redirect:list";
     }
 
-    @GetMapping("/list")
+    @GetMapping("/product/list")
     public String listProducts(Model model){
         List<Product> allProducts = service.findAll();
         model.addAttribute("products", allProducts);
