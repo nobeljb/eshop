@@ -43,4 +43,9 @@ public class ProductRepository {
         }
         return null; // Jika produk tidak ditemukan
     }
+
+    // Method untuk menghapus produk berdasarkan id
+    public void delete(String id) {
+        productData.removeIf(product -> product.getProductId().equals(id));
+    }
 }
