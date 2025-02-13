@@ -55,4 +55,13 @@ public class ProductController {
         service.update(product); // Pastikan service menyediakan method update
         return "redirect:/product/list";
     }
+
+    // --- Fitur Delete ---
+
+    // Menghapus produk berdasarkan id
+    @GetMapping("/product/delete/{id}")
+    public String deleteProduct(@PathVariable("id") String id) {
+        service.delete(id); // Pastikan service menyediakan method delete
+        return "redirect:/product/list";
+    }
 }

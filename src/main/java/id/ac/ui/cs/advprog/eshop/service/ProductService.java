@@ -10,4 +10,5 @@ public interface ProductService {
     // Method tambahan untuk fitur edit dan delete
     public Product findById(String id);
     public Product update(Product product);
+    public void delete(String id);
 }
