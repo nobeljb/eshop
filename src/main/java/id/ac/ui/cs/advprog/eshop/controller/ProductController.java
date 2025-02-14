@@ -15,6 +15,11 @@ public class ProductController {
     @Autowired
     private ProductService service;
 
+    @GetMapping("/")
+    public String getHome(Model model) {
+        return "homepage";
+    }
+
     @GetMapping("/product/create")
     public String createProductForm(Model model) {
         Product product = new Product();
