@@ -16,7 +16,7 @@ class ProductRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        productRepository = new ProductRepository(); // Ensure a fresh repository for each test
+        productRepository = new ProductRepository(); // Ensure fresh repository for each test
     }
 
     @Test
@@ -27,7 +27,6 @@ class ProductRepositoryTest {
         product.setProductQuantity(100);
         productRepository.create(product);
 
-        // Convert iterator to list for easier assertions
         List<Product> products = new ArrayList<>();
         productRepository.findAll().forEachRemaining(products::add);
 
@@ -111,5 +110,58 @@ class ProductRepositoryTest {
 
         productRepository.delete("delete-id");
         assertNull(productRepository.findById("delete-id"), "Deleted product should not be found");
+    }
+
+    // ================ NEGATIVE SCENARIOS ====================
+
+    @Test
+    void testCreateProductWithNullOrEmptyId() {
+        Product product = new Product();
+        product.setProductId(null);  // Tidak di-set ID-nya
+        product.setProductName("Generated ID Product");
+        product.setProductQuantity(30);
+
+        Product savedProduct = productRepository.create(product);
+        assertNotNull(savedProduct.getProductId(), "Product ID should be generated if null");
+        assertFalse(savedProduct.getProductId().trim().isEmpty(), "Generated Product ID should not be empty");
+    }
+
+    @Test
+    void testUpdateNonExistentProduct() {
+        Product updatedProduct = new Product();
+        updatedProduct.setProductId("non-existent-id");
+        updatedProduct.setProductName("Does not exist");
+        updatedProduct.setProductQuantity(50);
+
+        Product result = productRepository.update(updatedProduct);
+        assertNull(result, "Updating a non-existent product should return null");
+    }
+
+    @Test
+    void testDeleteNonExistentProduct() {
+        int initialSize = getRepositorySize();
+        productRepository.delete("non-existent-id");
+        int finalSize = getRepositorySize();
+
+        assertEquals(initialSize, finalSize, "Deleting a non-existent product should not change the repository size");
+    }
+
+    @Test
+    void testFindDeletedProduct() {
+        Product product = new Product();
+        product.setProductId("temp-id");
+        product.setProductName("Temporary Product");
+        product.setProductQuantity(5);
+        productRepository.create(product);
+
+        productRepository.delete("temp-id");
+        assertNull(productRepository.findById("temp-id"), "Deleted product should not be found");
+    }
+
+    // Helper method untuk menghitung jumlah produk di repository
+    private int getRepositorySize() {
+        List<Product> products = new ArrayList<>();
+        productRepository.findAll().forEachRemaining(products::add);
+        return products.size();
     }
 }
