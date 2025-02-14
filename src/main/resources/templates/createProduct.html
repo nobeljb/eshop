@@ -19,10 +19,12 @@
         <div class="form-group">
             <label for="nameInput">Product Name</label>
             <input th:field="*{productName}" type="text" class="form-control" id="nameInput" placeholder="Enter product name">
+            <div th:if="${nameError}" class="error-message text-danger" th:text="${nameError}"></div>
         </div>
         <div class="form-group">
             <label for="quantityInput">Quantity</label>
             <input th:field="*{productQuantity}" type="number" class="form-control" id="quantityInput" placeholder="Enter product quantity">
+            <div th:if="${quantityError}" class="error-message text-danger" th:text="${quantityError}"></div>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
         <a th:href="@{/product/list}" class="btn btn-secondary">Cancel</a>

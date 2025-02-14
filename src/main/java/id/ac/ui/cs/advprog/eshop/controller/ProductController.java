@@ -29,8 +29,24 @@ public class ProductController {
 
     @PostMapping("/product/create")
     public String createProduct(@ModelAttribute Product product, Model model) {
+        boolean hasError = false;
+
+        if (product.getProductName() == null || product.getProductName().trim().isEmpty()) {
+            model.addAttribute("nameError", "Nama produk tidak boleh kosong.");
+            hasError = true;
+        }
+
+        if (product.getProductQuantity() <= 0) {
+            model.addAttribute("quantityError", "Kuantitas harus lebih dari 0.");
+            hasError = true;
+        }
+
+        if (hasError) {
+            return "createProduct"; // Kembali ke halaman form dengan pesan error
+        }
+
         service.create(product);
-        return "redirect:list";
+        return "redirect:/product/list";
     }
 
     @GetMapping("/product/list")
