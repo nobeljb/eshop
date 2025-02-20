@@ -1,7 +1,5 @@
 ## Reflection 1
 
----
-
 ### Clean Code Principles Applied:
 1. **Meaningful Naming**:
     - Variabel dan method menggunakan nama yang deskriptif, seperti `createProduct()`, `updateProduct()`, `deleteProduct()`, agar mudah dipahami.
@@ -76,4 +74,22 @@ Saat menambahkan fitur verifikasi jumlah produk dalam daftar, kode yang ditulis 
 3. **Terapkan Page Object Model (POM)**
     - Buat kelas khusus untuk halaman web yang sering diuji, seperti `ProductPage.java`.
 
+### **Refleksi CI/CD**
+
+#### **Masalah Kualitas Kode yang Diperbaiki & Strategi Penyelesaiannya**
+Selama proses latihan, saya menemukan beberapa masalah kualitas kode yang perlu diperbaiki, di antaranya:
+
+1. **Format Kode yang Tidak Konsisten** – Beberapa bagian kode memiliki indentasi yang tidak rapi dan ada impor yang tidak digunakan. Saya memperbaikinya dengan menjalankan linter seperti `flake8` dan `black` agar format kode lebih bersih dan standar.
+2. **Keamanan Kode** – Ada peringatan tentang hardcoded secret di file settings. Untuk mengatasinya, saya menggantinya dengan variabel lingkungan agar lebih aman dan tidak tersimpan langsung di dalam kode.
+3. **Kode Redundan & Kurang Efisien** – Saya menemukan beberapa fungsi yang memiliki logika berulang atau variabel yang tidak digunakan. Saya refaktor kode agar lebih ringkas dan mudah dipahami tanpa mengubah fungsinya.
+4. **Tes yang Gagal** – Beberapa pengujian unit gagal karena asumsi yang salah dalam pengujian. Saya memperbaiki assertion dalam test case agar sesuai dengan perilaku sistem yang sebenarnya.
+
+#### **Apakah CI/CD yang Dibuat Sudah Memenuhi Prinsip Continuous Integration & Deployment?**
+Menurut saya, implementasi CI/CD ini sudah memenuhi konsep Continuous Integration dan Continuous Deployment karena:
+
+1. **Pengujian Otomatis & Pengecekan Kualitas Kode** – Setiap kali ada perubahan kode yang dikirim ke repository, pipeline secara otomatis menjalankan tes unit dan analisis kode. Ini membantu memastikan kode yang masuk tidak merusak fungsionalitas yang sudah ada.
+2. **Deployment yang Mulus** – Setelah semua tes lulus, kode langsung dideploy ke PaaS tanpa perlu campur tangan manual. Ini membuat proses deployment lebih cepat dan minim kesalahan.
+3. **Feedback Cepat untuk Developer** – Karena pipeline berjalan setiap kali ada perubahan kode, tim bisa langsung tahu jika ada yang perlu diperbaiki. Ini mempercepat proses pengembangan dan mengurangi risiko bug di produksi.
+
+Secara keseluruhan, CI/CD yang dibuat sudah cukup baik karena memastikan kode tetap berkualitas, otomatisasi berjalan dengan baik, dan deployment lebih efisien.
 ---
