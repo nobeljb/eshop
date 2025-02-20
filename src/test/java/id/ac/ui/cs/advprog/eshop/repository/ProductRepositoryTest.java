@@ -164,4 +164,82 @@ class ProductRepositoryTest {
         productRepository.findAll().forEachRemaining(products::add);
         return products.size();
     }
+
+    @Test
+    void testUpdateFirstProduct() {
+        Product product1 = new Product();
+        product1.setProductId("first-id");
+        product1.setProductName("First Product");
+        product1.setProductQuantity(10);
+        productRepository.create(product1);
+
+        Product product2 = new Product();
+        product2.setProductId("second-id");
+        product2.setProductName("Second Product");
+        product2.setProductQuantity(20);
+        productRepository.create(product2);
+
+        Product updatedProduct = new Product();
+        updatedProduct.setProductId("first-id");
+        updatedProduct.setProductName("Updated First Product");
+        updatedProduct.setProductQuantity(99);
+
+        productRepository.update(updatedProduct);
+
+        Product retrieved = productRepository.findById("first-id");
+        assertNotNull(retrieved);
+        assertEquals("Updated First Product", retrieved.getProductName());
+        assertEquals(99, retrieved.getProductQuantity());
+    }
+
+    @Test
+    void testUpdateLastProduct() {
+        Product product1 = new Product();
+        product1.setProductId("first-id");
+        product1.setProductName("First Product");
+        product1.setProductQuantity(10);
+        productRepository.create(product1);
+
+        Product product2 = new Product();
+        product2.setProductId("second-id");
+        product2.setProductName("Second Product");
+        product2.setProductQuantity(20);
+        productRepository.create(product2);
+
+        Product updatedProduct = new Product();
+        updatedProduct.setProductId("second-id");
+        updatedProduct.setProductName("Updated Second Product");
+        updatedProduct.setProductQuantity(50);
+
+        productRepository.update(updatedProduct);
+
+        Product retrieved = productRepository.findById("second-id");
+        assertNotNull(retrieved);
+        assertEquals("Updated Second Product", retrieved.getProductName());
+        assertEquals(50, retrieved.getProductQuantity());
+    }
+
+    @Test
+    void testCreateProductWithEmptyId() {
+        Product product = new Product();
+        product.setProductId("");  // ID kosong
+        product.setProductName("No ID Product");
+        product.setProductQuantity(25);
+
+        Product savedProduct = productRepository.create(product);
+        assertNotNull(savedProduct.getProductId(), "Product ID should be generated if empty");
+        assertFalse(savedProduct.getProductId().trim().isEmpty(), "Generated Product ID should not be empty");
+    }
+
+    @Test
+    void testCreateProductWithSpacesAsId() {
+        Product product = new Product();
+        product.setProductId("   ");  // ID hanya spasi
+        product.setProductName("Space ID Product");
+        product.setProductQuantity(30);
+
+        Product savedProduct = productRepository.create(product);
+        assertNotNull(savedProduct.getProductId(), "Product ID should be generated if only spaces");
+        assertFalse(savedProduct.getProductId().trim().isEmpty(), "Generated Product ID should not be empty");
+    }
 }
