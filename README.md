@@ -1,4 +1,7 @@
-## Reflection 1
+# Link deploy
+> https://melted-fenelia-nobeljb-316a96d3.koyeb.app/
+---
+## Exercise 1
 
 ### Clean Code Principles Applied:
 1. **Meaningful Naming**:
@@ -34,10 +37,7 @@
 3. **Unit Testing**
     - Perlu menambahkan unit test menggunakan JUnit dan Mockito untuk memastikan semua fitur berjalan dengan baik.
 
-
-## Reflection 2
-
----
+##  Exercise 2
 
 ### 1. Bagaimana rasanya setelah menulis unit test?
 Setelah menulis unit test, saya merasa lebih yakin bahwa fitur-fitur yang dibuat pada proyek ini berjalan sesuai harapan. Unit test juga membantu menemukan potensi bug lebih awal sebelum aplikasi di-deploy nanti.
@@ -74,7 +74,9 @@ Saat menambahkan fitur verifikasi jumlah produk dalam daftar, kode yang ditulis 
 3. **Terapkan Page Object Model (POM)**
     - Buat kelas khusus untuk halaman web yang sering diuji, seperti `ProductPage.java`.
 
-### **Refleksi CI/CD**
+# **Refleksi Modul 2**
+
+---
 
 #### **Masalah Kualitas Kode yang Diperbaiki & Strategi Penyelesaiannya**
 Selama proses latihan, saya menemukan beberapa masalah kualitas kode yang perlu diperbaiki, di antaranya:
@@ -91,5 +93,4 @@ Menurut saya, implementasi CI/CD ini sudah memenuhi konsep Continuous Integratio
 2. **Deployment yang Mulus** – Setelah semua tes lulus, kode langsung dideploy ke PaaS tanpa perlu campur tangan manual. Ini membuat proses deployment lebih cepat dan minim kesalahan.
 3. **Feedback Cepat untuk Developer** – Karena pipeline berjalan setiap kali ada perubahan kode, tim bisa langsung tahu jika ada yang perlu diperbaiki. Ini mempercepat proses pengembangan dan mengurangi risiko bug di produksi.
 
-Secara keseluruhan, CI/CD yang dibuat sudah cukup baik karena memastikan kode tetap berkualitas, otomatisasi berjalan dengan baik, dan deployment lebih efisien.
 ---
