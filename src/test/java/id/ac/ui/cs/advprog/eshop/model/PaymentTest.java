@@ -41,20 +41,13 @@ class PaymentTest {
     }
 
     @Test
-    void testCreatePaymentWithSuccessStatus() {
+    void testSetStatusToSuccess() {
         paymentData.put("voucherCode", "ESHOP1234ABC5678");
         Payment payment = new Payment(order, "Voucher", paymentData);
         payment.setStatus(PaymentStatus.SUCCESS.getValue());
 
         assertEquals(PaymentStatus.SUCCESS.getValue(), payment.getStatus());
-    }
-
-    @Test
-    void testCreatePaymentWithInvalidStatus() {
-        paymentData.put("voucherCode", "ESHOP1234ABC5678");
-        Payment payment = new Payment(order, "Voucher", paymentData);
-
-        assertThrows(IllegalArgumentException.class, () -> payment.setStatus("MEOW"));
+        assertEquals(OrderStatus.SUCCESS.getValue(), order.getStatus());
     }
 
     @Test
@@ -64,5 +57,14 @@ class PaymentTest {
         payment.setStatus(PaymentStatus.REJECTED.getValue());
 
         assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
+        assertEquals(OrderStatus.FAILED.getValue(), order.getStatus());
+    }
+
+    @Test
+    void testSetStatusToInvalid() {
+        paymentData.put("voucherCode", "ESHOP1234ABC5678");
+        Payment payment = new Payment(order, "Voucher", paymentData);
+
+        assertThrows(IllegalArgumentException.class, () -> payment.setStatus("MEOW"));
     }
 }
