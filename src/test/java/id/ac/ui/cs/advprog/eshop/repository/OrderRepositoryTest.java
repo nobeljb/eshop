@@ -1,6 +1,7 @@
 import id.ac.ui.cs.advprog.eshop.enums.OrderStatus;
 import id.ac.ui.cs.advprog.eshop.model.Order;
 import id.ac.ui.cs.advprog.eshop.model.Product;
+import id.ac.ui.cs.advprog.eshop.repository.OrderRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +16,7 @@ class OrderRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        orderRepository = new orderRepository();
+        orderRepository = new OrderRepository();
 
         List<Product> products = new ArrayList<>();
         products = new ArrayList<Product>();
@@ -53,7 +54,7 @@ class OrderRepositoryTest {
     @Test
     void testSaveUpdate() {
         Order order = orders.get(1);
-        Order result = orderRepository.save(order);
+        orderRepository.save(order);
         Order newOrder = new Order(order.getId(), order.getProducts(), order.getOrderTime(),
                 order.getAuthor(), OrderStatus.SUCCESS.getValue());
         Order result = orderRepository.save(newOrder);
@@ -73,7 +74,6 @@ class OrderRepositoryTest {
         }
 
         Order findResult = orderRepository.findById(orders.get(1).getId());
-        assertEquals(orders.get(1).getId(), result.getId());
         assertEquals(orders.get(1).getId(), findResult.getId());
         assertEquals(orders.get(1).getOrderTime(), findResult.getOrderTime());
         assertEquals(orders.get(1).getAuthor(), findResult.getAuthor());
@@ -103,7 +103,7 @@ class OrderRepositoryTest {
 
     @Test
     void testFindAllByAuthorIfAllLowercase() {
-        orderRepository.save(ordes.get(1));
+        orderRepository.save(orders.get(1));
 
         List<Order> orderList = orderRepository.findAllByAuthor(
                 orders.get(1).getAuthor().toLowerCase());
