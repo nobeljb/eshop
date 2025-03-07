@@ -1,81 +1,43 @@
-# Link deploy
-> [ESHOP NOBELJB](https://melted-fenelia-nobeljb-316a96d3.koyeb.app/)
+Berikut adalah jawaban refleksi berdasarkan pertanyaan yang diberikan:
+
 ---
 
-# Penerapan Prinsip SOLID dalam Proyek
+### **Refleksi terhadap Alur TDD**
+Mengikuti alur **Test-Driven Development (TDD)** memberikan banyak manfaat dalam proses pengembangan perangkat lunak. Evaluasi saya terhadap pendekatan TDD dalam latihan ini:
 
-## 1) Prinsip yang Diterapkan dalam Proyek
+1. **Apakah TDD cukup berguna?**
+  - Ya, TDD membantu memastikan bahwa setiap fitur yang dikembangkan telah diuji sebelum diimplementasikan, sehingga mengurangi bug di tahap awal.
+  - Pendekatan ini juga membantu dalam mendesain kode yang lebih modular dan mudah dipahami.
+  - Namun, terkadang TDD terasa lebih lambat dibandingkan menulis kode langsung, terutama saat harus banyak refaktor.
 
-Dalam proyek ini, kami menerapkan prinsip SOLID untuk meningkatkan kualitas kode. Berikut adalah prinsip-prinsip yang diterapkan:
+2. **Apa yang bisa diperbaiki untuk ke depannya?**
+  - Meningkatkan cakupan pengujian: Beberapa edge case baru ditemukan setelah implementasi. Ke depan, saya harus lebih teliti dalam mengidentifikasi edge case sejak awal.
+  - Mengoptimalkan penggunaan mock dalam pengujian: Beberapa pengujian masih bergantung pada implementasi nyata daripada menggunakan mocking dengan baik.
+  - Menjaga kejelasan dalam siklus RED-GREEN-REFACTOR: Terkadang ada kecenderungan untuk langsung melakukan refaktor tanpa melewati siklus secara berurutan.
 
-- **Single Responsibility Principle (SRP):**
-   - Memisahkan `CarWriteService` dan `CarReadService` untuk memisahkan tanggung jawab antara operasi baca dan operasi tulis pada entitas `Car`.
-   - `CarController` hanya menangani logika yang berkaitan dengan HTTP request tanpa mencampurkan logika bisnis.
+---
 
-- **Open/Closed Principle (OCP):**
-   - Struktur `CarService` memungkinkan penambahan fitur baru tanpa mengubah implementasi yang ada dengan menggunakan interface `CarReadService` dan `CarWriteService`.
+### **Refleksi terhadap Prinsip F.I.R.S.T.**
+Dalam tutorial ini, saya telah membuat unit test untuk berbagai fitur. Berikut adalah evaluasi terhadap kepatuhan terhadap prinsip F.I.R.S.T.:
 
-- **Liskov Substitution Principle (LSP):**
-   - Interface `CarService` dipecah menjadi `CarReadService` dan `CarWriteService` untuk memastikan bahwa implementasi layanan tetap konsisten dan dapat diganti tanpa mempengaruhi sistem.
+1. **Fast (Cepat)** 
+  - Sebagian besar unit test berjalan cepat karena hanya menguji unit kecil kode.
+  - Namun, beberapa pengujian yang melibatkan repository bisa dioptimalkan lebih lanjut dengan menggunakan in-memory database atau mocking yang lebih efisien.
 
-- **Interface Segregation Principle (ISP):**
-   - Memisahkan `CarReadService` dan `CarWriteService` agar kelas yang hanya membutuhkan operasi baca tidak harus mengimplementasikan operasi tulis, dan sebaliknya.
+2. **Independent (Independen)** 
+  - Setiap test berjalan sendiri tanpa bergantung pada test lainnya.
+  - Namun, perlu memastikan tidak ada state yang tersisa dari satu test ke test lainnya.
 
-- **Dependency Inversion Principle (DIP):**
-   - Menggunakan `CarReadService` dan `CarWriteService` sebagai abstraksi agar `CarController` tidak bergantung langsung pada implementasi spesifik dari repository.
+3. **Repeatable (Dapat Diulang)** 
+  - Test dapat dijalankan berkali-kali dengan hasil yang sama di lingkungan yang sama.
+  - Penggunaan mock membantu memastikan kestabilan pengujian.
 
-## 2) Keuntungan Penerapan SOLID
+4. **Self-Validating (Memvalidasi Diri Sendiri)** 
+  - Semua test menggunakan assert yang jelas untuk menyatakan apakah pengujian berhasil atau gagal.
+  - Tidak memerlukan validasi manual.
 
-- **Kode lebih mudah dipahami dan dipelihara**
-   - Dengan memisahkan layanan baca dan tulis, kode menjadi lebih modular dan mudah dimodifikasi tanpa harus mengubah seluruh layanan.
+5. **Timely (Tepat Waktu)** 
+  - Sebagian besar test ditulis sebelum implementasi (sesuai TDD).
+  - Namun, ada beberapa kasus di mana pengujian baru dibuat setelah kode ditulis karena keterlambatan dalam mendefinisikan spesifikasi test yang jelas.
 
-- **Meningkatkan fleksibilitas**
-   - Dengan menggunakan interface, kita dapat mengganti implementasi layanan tanpa mengubah kode yang bergantung padanya.
-
-- **Mengurangi ketergantungan antar komponen**
-   - Dengan memisahkan tanggung jawab, perubahan di satu bagian kode tidak akan berdampak besar pada bagian lainnya.
-
-### Contoh Keuntungan:
-Sebelumnya, `CarService` menangani semua operasi terkait `Car`, termasuk pencarian dan modifikasi data. Dengan menerapkan SRP dan ISP, layanan ini dibagi menjadi:
-
-```java
-public interface CarReadService {
-    Car findById(String carId);
-    List<Car> findAll();
-}
-
-public interface CarWriteService {
-    Car create(Car car);
-    void update(String carId, Car car);
-    void deleteCarById(String carId);
-}
-```
-
-Sekarang, jika ada perubahan dalam operasi pencarian, kita hanya perlu memodifikasi `CarReadService` tanpa mengubah `CarWriteService`.
-
-## 3) Kekurangan Jika Tidak Menerapkan SOLID
-
-- **Kode sulit diperluas dan dimodifikasi**
-   - Jika semua layanan terpusat dalam satu kelas, setiap perubahan kecil bisa berdampak besar pada keseluruhan sistem.
-
-- **Kesulitan dalam pengujian (testing)**
-   - Jika kode tidak dipisahkan dengan baik, pengujian unit menjadi sulit dilakukan karena banyak ketergantungan yang tidak diperlukan.
-
-- **Ketergantungan tinggi antar komponen**
-   - Jika `CarController` langsung bergantung pada `CarRepository`, maka setiap perubahan pada `CarRepository` dapat menyebabkan perubahan besar pada seluruh sistem.
-
-### Contoh Masalah Tanpa SOLID:
-Sebelumnya, satu service menangani semua operasi:
-```java
-public class CarService {
-    public Car findById(String carId) { ... }
-    public List<Car> findAll() { ... }
-    public Car create(Car car) { ... }
-    public void update(String carId, Car car) { ... }
-    public void deleteCarById(String carId) { ... }
-}
-```
-Dengan struktur ini, setiap perubahan dalam operasi baca akan mempengaruhi operasi tulis juga, sehingga sulit dikelola.
-
-Dengan menerapkan SOLID, proyek menjadi lebih modular, fleksibel, dan mudah diperluas di masa depan.
-
+---
