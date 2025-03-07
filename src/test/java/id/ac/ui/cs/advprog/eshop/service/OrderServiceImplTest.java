@@ -1,7 +1,10 @@
+package id.ac.ui.cs.advprog.eshop.service;
+
 import id.ac.ui.cs.advprog.eshop.enums.OrderStatus;
 import id.ac.ui.cs.advprog.eshop.model.Order;
 import id.ac.ui.cs.advprog.eshop.model.Product;
 import id.ac.ui.cs.advprog.eshop.repository.OrderRepository;
+import id.ac.ui.cs.advprog.eshop.service.OrderServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,7 +22,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class OrderServiceImplTest {
     @InjectMocks
-    OrderServiceImplTest orderService;
+    OrderServiceImpl orderService;
 
     @Mock
     OrderRepository orderRepository;
@@ -58,7 +61,7 @@ class OrderServiceImplTest {
         Order order = orders.get(1);
         doReturn(order).when(orderRepository).findById(order.getId());
 
-        AssertNull(orderService.createOrder(order));
+        assertNull(orderService.createOrder(order));
         verify(orderRepository, times(0)).save(order);
     }
 
@@ -109,7 +112,7 @@ class OrderServiceImplTest {
 
     @Test
     void testFindByIdIfIdNotFound() {
-        doReturn(order).when(orderRepository).findById("zczc");
+        doReturn(null).when(orderRepository).findById("zczc");
         assertNull(orderService.findById("zczc"));
     }
 
